@@ -1,0 +1,10 @@
+FROM mysql:5.7.17
+
+ENV MYSQL_ROOT_PASSWORD=test
+ENV MYSQL_PASSWORD=test
+ENV MYSQL_DATABASE=reticula
+
+COPY dump/ /docker-entrypoint-initdb.d
+COPY conf/ /etc/mysql/conf.d
+
+EXPOSE 3306

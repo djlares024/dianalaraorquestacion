@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-db
+  labels:
+    app: database
+spec:
+  selector: 
+    matchLabels:
+      app: database
+      tier: data
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: database
+        tier: data
+    spec:
+      containers:
+      - name: db
+        image: djlares/database:v1
+        env:
+        - name: MYSQL_ROOT_PASSWORD
+          value: test
+        - name: MYSQL_DATABASE
+          value: reticula
+        - name: MYSQL_USER
+          value: root
+        - name: MYSQL_PASSWORD
+          value: test
+        ports: 
+        - containerPort: 3306 
+        volumeMounts:
+        - name: mysql-persistent-storage
+          mountPath: /var/lib/mysql
+      volumes:
+        - name: mysql-persistent-storage
+          persistentVolumeClaim:
+            claimName: mysql-pv-claim

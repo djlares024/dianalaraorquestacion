@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deployment-web
+  labels:
+    app: website
+spec:
+  selector:
+    matchLabels:
+      app: website
+      tier: web
+  replicas: 7
+  template:
+    metadata:
+      labels:
+        app: website
+        tier: web
+    spec:
+      containers:
+      - name: phpmyadmin
+        image: djlares/webphp:v1
+        ports: 
+        - containerPort: 80 
